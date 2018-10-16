@@ -1,0 +1,5 @@
+target/
+.idea/
+src/main/webapp/static/
+src/main/webapp/static/js/
+src/main/webapp/static/css/
