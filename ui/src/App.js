@@ -1,14 +1,49 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
+import Demo from './pages/Demo';
 import './App.css';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Loadable from 'react-loadable';
 import {Navbar, Nav, NavItem, NavDropdown, MenuItem} from 'react-bootstrap'
 import {Provider} from "react-redux"
+import * as reducers from './reducers'
 
-import { createStore } from 'redux'
-
-const store = createStore(require("./reducers").default)
+import {ADD_TODO} from './actions'
+import { combineReducers, createStore } from 'redux'
+function visibilityFilter(state = 'SHOW_ALL', action) {
+  switch (action.type) {
+    case 'SET_VISIBILITY_FILTER':
+      return action.filter
+    default:
+      return state
+  }
+}
+function todos(state = [], action) {
+  switch (action.type) {
+    case 'ADD_TODO':
+      return [
+        ...state,
+        {
+          text: action.text,
+          completed: false
+        }
+      ]
+    case 'COMPLETE_TODO':
+      return state.map((todo, index) => {
+        if (index === action.index) {
+          return Object.assign({}, todo, {
+            completed: true
+          })
+        }
+        return todo
+      })
+    default:
+      return state
+  }
+}
+// const simple = require("./reducers").default
+let reducer = combineReducers({ visibilityFilter, todos, ...reducers })
+let store = createStore(reducer)
 
 const Home = () => (
   <div>
@@ -64,7 +99,12 @@ const navListFlat = {
 function getMenus(cb){
   setTimeout(()=>{cb(navListFlat)},3000)
 }
-
+function addTodo(text) {
+  return {
+    type: ADD_TODO,
+    text
+  }
+}
 class App extends Component {
   constructor(props){
     super(props)
@@ -73,6 +113,10 @@ class App extends Component {
     }
   }
   componentDidMount(){
+    store.dispatch(addTodo('Learn about actions'))
+    store.dispatch(addTodo('Learn about reducers'))
+    store.dispatch(addTodo('Learn about store'))
+    console.log(store.getState())
     getMenus(this.callback.bind(this))
     console.log(new Date())
   }
@@ -113,11 +157,15 @@ class App extends Component {
               <li>
                 <Link to="/about">About</Link>
               </li>
+              <li>
+                <Link to="/demo">Demo</Link>
+              </li>
             </ul>
 
             <div className={"container"}>
               <Route exact path="/" component={Home} />
               <Route path="/about" component={MyComponent} />
+              <Route path="/demo" component={Demo} />
              </div>
           </div>
         </Router>
