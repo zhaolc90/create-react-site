@@ -1,6 +1,18 @@
 import React, { Component } from 'react';
 import {connect} from "react-redux"
 import {addTodo} from '../actions'
+import {Button } from 'react-bootstrap'
+// var createReactClass = require('create-react-class')
+const pageData = [
+  {
+    component: Button,
+    children:"Hello"
+  },
+  {
+    component: Button,
+    children:"Hello again"
+  }]
+
 const getVisibleTodos = (todos, filter) => {
     switch (filter) {
       case 'SHOW_COMPLETED':
@@ -26,14 +38,31 @@ const getVisibleTodos = (todos, filter) => {
       }
     }
   }
+  const createPage = (data) =>{
+    console.log(data)
+    const children = []
+    data.forEach(element => {
+      children.push(
+        <element.component>
+          {element.children}
+        </element.component>
+      )
+    });
+    return(
+      function(){
+        return(
+          <div>
+              {children}
+          </div>
+        )
+      }
+    )
+  }
+const Page = createPage(pageData)
 
 class Demo extends Component{
     render(){
-        return (
-            <div>
-                Demo
-            </div>
-        )
+        return <Page />
     }
 }
 const VisibleTodoList = connect(
