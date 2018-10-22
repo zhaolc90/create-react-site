@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import Demo from './pages/Demo';
 import './App.css';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Loadable from 'react-loadable';
-import {Navbar, Nav, NavItem, NavDropdown, MenuItem,Grid,Row,Col} from 'react-bootstrap'
+import {Navbar, Nav, NavItem, Grid,Row,Col} from 'react-bootstrap'
 import {Provider} from "react-redux"
 import * as reducers from './reducers'
+// import {Switch} from 'antd'
+import Switch from 'rc-switch';
 import Navs  from './Menus'
 import {ADD_TODO} from './actions'
 import { combineReducers, createStore } from 'redux'
@@ -140,8 +141,10 @@ class App extends Component {
   constructor(props){
     super(props)
     this.state = {
+      devMode:false,
       menu:{}
     }
+    this.changeDevMode = this.changeDevMode.bind(this)
   }
   componentDidMount(){
     store.dispatch(addTodo('Learn about actions'))
@@ -158,7 +161,13 @@ class App extends Component {
       menu:menus
     })
   }
+  changeDevMode(checked){
+    this.setState({
+      devMode: checked
+    })
+  }
   render() {
+    const {devMode} = this.state
     return (
       <div className="App">
 				<Provider store={store}>
@@ -170,18 +179,23 @@ class App extends Component {
                     <Link className={"navbar-brand"}  to="/">Project Name</Link>
                 </Navbar.Brand>
               </Navbar.Header>
+              <Nav pullRight>
+                <NavItem>
+                  <Switch checked={devMode} onChange={this.changeDevMode}/>
+                </NavItem>
+              </Nav>
             </Navbar>
             <Grid>
-            <Row className="show-grid">
-              <Col xs={12} md={3}>
-                <Navs menus={menusDemo}/>
-              </Col>
-              <Col xs={12} md={9}>
-              <Route exact path="/" component={Home} />
-              <Route path="/about" component={MyComponent} />
-              <Route path="/demo" component={Demo} />
-              </Col>
-            </Row>
+              <Row className="show-grid">
+                <Col xs={12} md={3}>
+                  <Navs menus={menusDemo} devMode={devMode}/>
+                </Col>
+                <Col xs={12} md={9}>
+                  <Route exact path="/" component={Home} />
+                  <Route path="/about" component={MyComponent} />
+                  <Route path="/demo" component={Demo} />
+                </Col>
+              </Row>
             </Grid>
           </div>
         </Router>

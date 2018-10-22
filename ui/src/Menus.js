@@ -1,8 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Link } from "react-router-dom";
 
 const propTypes = {};
 
@@ -12,7 +9,7 @@ const Add = (props) =>{
         <div 
             style={{
                 width: "100%",
-                backgroundColor:"yellow"
+                backgroundColor:"aquamarine"
             }}
         >
             +
@@ -21,7 +18,7 @@ const Add = (props) =>{
 }
 export default class Nav extends React.Component {
     render() {
-        const {menus} = this.props
+        const {menus, devMode} = this.props
         return (
             <ul  style={{ listStyleType: "none",paddingInlineStart: 0}}>
               {menus.map(
@@ -32,9 +29,11 @@ export default class Nav extends React.Component {
                     </li>)
                   }
               )}
-              <li key={"add"}>
-                        <Add/>
-                </li>
+                {devMode
+                    ? <li key={"add"}>
+                              <Add/>
+                      </li>
+                    :null}
             </ul>
         );
     }
