@@ -4,10 +4,10 @@ import Demo from './pages/Demo';
 import './App.css';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Loadable from 'react-loadable';
-import {Navbar, Nav, NavItem, NavDropdown, MenuItem} from 'react-bootstrap'
+import {Navbar, Nav, NavItem, NavDropdown, MenuItem,Grid,Row,Col} from 'react-bootstrap'
 import {Provider} from "react-redux"
 import * as reducers from './reducers'
-
+import Navs  from './Menus'
 import {ADD_TODO} from './actions'
 import { combineReducers, createStore } from 'redux'
 function visibilityFilter(state = 'SHOW_ALL', action) {
@@ -45,9 +45,26 @@ function todos(state = [], action) {
 let reducer = combineReducers({ visibilityFilter, todos, ...reducers })
 let store = createStore(reducer)
 
+const Add = (props) =>{
+  return(
+      <div 
+          style={{
+              width: "100%",
+              backgroundColor:"yellow"
+          }}
+      >
+          +
+      </div>
+  )
+}
 const Home = () => (
   <div>
     <h2>Home</h2>
+    <h2>Home</h2>
+    <h2>Home</h2>
+    <h2>Home</h2>
+    <h2>Home</h2>
+    <Add/>
   </div>
 );
 
@@ -72,6 +89,20 @@ class MyComponent extends React.Component {
     return <LoadableBar/>;
   }
 }
+const menusDemo = [
+  {
+    path:"/",
+    name: "Home1"
+  },
+  {
+    path:"/demo",
+    name: "Demo1"
+  },
+  {
+    path:"/about",
+    name: "About1"
+  },
+]
 const navListFlat = {
   root:{
     id:0,
@@ -134,39 +165,24 @@ class App extends Component {
          <Router>
           <div>
             <Navbar>
-              {/* <Navbar.Header> */}
-                {/* <Navbar.Brand> */}
-                    <Link className={"navbar-brand"} style={{float:"left", position: "absolute",left: "20px"}} to="/">Project Name</Link>
-                {/* </Navbar.Brand> */}
-              {/* </Navbar.Header> */}
-              {/* <Nav>
-                <NavDropdown eventKey={3} title="Dropdown" id="basic-nav-dropdown">
-                  <MenuItem eventKey={3.1}>Action</MenuItem>
-                  <MenuItem eventKey={3.2}>Another action</MenuItem>
-                  <MenuItem eventKey={3.3}>Something else here</MenuItem>
-                  <MenuItem divider />
-                  <MenuItem eventKey={3.4}>Separated link</MenuItem>
-                </NavDropdown>
-              </Nav> */}
+              <Navbar.Header>
+                <Navbar.Brand>
+                    <Link className={"navbar-brand"}  to="/">Project Name</Link>
+                </Navbar.Brand>
+              </Navbar.Header>
             </Navbar>
-
-            <ul  style={{ listStyleType: "none", padding: 0,width:200,display:"inline-block" ,float:"left"}}>
-              <li>
-                <Link to="/">Home</Link>
-              </li>
-              <li>
-                <Link to="/about">About</Link>
-              </li>
-              <li>
-                <Link to="/demo">Demo</Link>
-              </li>
-            </ul>
-
-            <div className={"container"}>
+            <Grid>
+            <Row className="show-grid">
+              <Col xs={12} md={3}>
+                <Navs menus={menusDemo}/>
+              </Col>
+              <Col xs={12} md={9}>
               <Route exact path="/" component={Home} />
               <Route path="/about" component={MyComponent} />
               <Route path="/demo" component={Demo} />
-             </div>
+              </Col>
+            </Row>
+            </Grid>
           </div>
         </Router>
         </Provider>
