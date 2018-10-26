@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Demo from './pages/Demo';
+import ChartDemo from './pages/ChartDemo';
 import './App.css';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Loadable from 'react-loadable';
@@ -193,7 +194,7 @@ class App extends Component {
                 <Col xs={12} md={9}>
                   <Route exact path="/" component={Home} />
                   <Route path="/about" component={MyComponent} />
-                  <Route path="/demo" component={Demo} />
+                  <Route path="/demo" component={ChartDemo} />
                 </Col>
               </Row>
             </Grid>
