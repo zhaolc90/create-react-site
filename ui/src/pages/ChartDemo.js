@@ -1,6 +1,6 @@
 import React from 'react';
 import {Button} from 'react-bootstrap'
-var Chart = require('./Charts').default;
+var Chart = require('../components/Charts').default;
 
 var sampleData = [
   {id: '5fbmzmtc', x: 7, y: 41, z: 6},
