@@ -18,6 +18,8 @@ export default class App extends React.Component {
         return (
             <React.Fragment>
                 <Chart data={sampleData} domain={domain}/>
+                <Chart data={sampleData} domain={domain}/>
+                <Chart data={sampleData} domain={domain}/>
             </React.Fragment>
         );
     }
