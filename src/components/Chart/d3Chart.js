@@ -10,23 +10,27 @@ d3Chart.create = function(el, props, state) {
       .attr('height', props.height);
 
   svg.append('g')
-      .attr('class', 'd3-points');
-
-  this.update(el, state);
+      .attr('class', 'd3-default');
+  this.update(el, state, props.draw);
 };
 
-d3Chart.update = function(el, state) {
+d3Chart.update = function(el, state, cb) {
   var scales = this._scales(el, state.domain);
-  this._draw(el, scales, state.data);
+  if(cb && typeof cb === 'function') {
+      cb(el, scales, state.data)
+  }
+  else{
+    this._draw(el, scales, state.data);
+  }
 };
 
 d3Chart.destroy = function(el) {
 };
 
 d3Chart._draw = function(el, scales, data) {
-  var g = d3.select(el).selectAll('.d3-points');
-
-  var point = g.selectAll('.d3-point')
+  var g = d3.select(el).selectAll('.d3-default');
+  var text = "Chart Pool"
+  var point = g.selectAll('.d3-note')
     .data(data, function(d) { return d.id; });
 
   // ENTER
@@ -48,10 +52,8 @@ d3Chart._scales = function(el, domain) {
     return null;
   }
 
-  var width = 300
-  // el.offsetWidth;
-  var height = 300
-  // el.offsetHeight;
+  var width = el.offsetWidth;
+  var height = el.offsetHeight;
 
   var x = d3.scale.linear()
     .range([0, width])

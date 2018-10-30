@@ -9,13 +9,14 @@ class Chart extends React.Component{
     var el = findDOMNode(this)
     d3Chart.create(el, {
       width: '100%',
-      height: '300px'
+      height: '300px',
+      draw:this.props.draw
     }, this.getChartState());
   }
 
   componentDidUpdate(){
     var el = findDOMNode(this);
-    d3Chart.update(el, this.getChartState());
+    d3Chart.update(el, this.getChartState(), this.props.draw);
   }
 
   getChartState(){
