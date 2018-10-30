@@ -1,14 +1,15 @@
 {
   "name": "rollup-starter-lib",
   "version": "1.0.0",
-  "main": "dist/how-long-till-lunch.cjs.js",
-  "module": "dist/how-long-till-lunch.esm.js",
-  "browser": "dist/how-long-till-lunch.umd.js",
+  "main": "dist/d3-pool-chart.cjs.js",
+  "module": "dist/d3-pool-chart.esm.js",
+  "browser": "dist/d3-pool-chart.umd.js",
   "dependencies": {
     "d3": "3",
     "ms": "^2.0.0",
     "react": "16.3",
-    "react-dom": "16.3"
+    "react-dom": "16.3",
+    "rollup-plugin-jsx": "^1.0.3"
   },
   "devDependencies": {
     "rollup": "^0.66.0",
