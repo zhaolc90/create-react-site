@@ -13,12 +13,18 @@ var sampleData = [
     {id: 's4f8phwm', x: 11, y: 45, z: 9},
     // ...
   ];
+  var sampleData1 = [
+      {id: '5fbmzmtc', x: 7, y: 60, z: 6},
+      {id: 's4f8phwm', x: 11, y: 45, z: 9},
+      // ...
+    ];
   var domain={x: [0, 30], y: [0, 100]}
   var draw = function(el, scales, data){
     var g = d3.select(el).selectAll('.d3-default');
     var text = "Chart Pool"
     var point = g.selectAll('.d3-note')
         .data(data, function(d) { return d.id; });
+        console.log(point,"PPPPPPPPp")
 
     // ENTER
     point.enter().append('circle')
@@ -35,12 +41,24 @@ var sampleData = [
   }
 
 export default class App extends React.Component {
+    constructor(props){
+        super(props)
+        this.state={
+            data:sampleData
+        }
+    }
     render() {
+        const {data} = this.state
         return (
             <React.Fragment>
                 <Chart data={sampleData} domain={domain} x={1}/>
-                <Chart data={sampleData} domain={domain} draw={draw} x={2}/>
+                <Chart data={data} domain={domain} draw={draw} x={2}/>
                 <Chart data={sampleData} domain={domain} x={3}/>
+                <button onClick={()=>{
+                    this.setState({
+                        data:sampleData1
+                    }).bind(this)
+                }}>set data</button>
             </React.Fragment>
         );
     }

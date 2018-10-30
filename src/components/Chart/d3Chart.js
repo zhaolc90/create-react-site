@@ -32,7 +32,7 @@ d3Chart._draw = function(el, scales, data) {
   var text = "Chart Pool"
   var point = g.selectAll('.d3-note')
     .data(data, function(d) { return d.id; });
-
+    console.log(point)
   // ENTER
   point.enter().append('circle')
       .attr('class', 'd3-point');
