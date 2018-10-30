@@ -1,19 +1,40 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+// Chart.js
+import React from "react"
+import ReactDOM from "react-dom"
+import d3Chart from './d3Chart'
 
-const propTypes = {};
+const findDOMNode = ReactDOM.findDOMNode
+class Chart extends React.Component{
+  componentDidMount(){
+    var el = findDOMNode(this)
+    d3Chart.create(el, {
+      width: '100%',
+      height: '300px'
+    }, this.getChartState());
+  }
 
-const defaultProps = {};
+  componentDidUpdate(){
+    var el = findDOMNode(this);
+    d3Chart.update(el, this.getChartState());
+  }
 
-export default class Chart extends React.Component {
-    render() {
-        return (
-            <div>
-                11
-            </div>
-        );
-    }
+  getChartState(){
+    return {
+      data: this.props.data,
+      domain: this.props.domain
+    };
+  }
+
+  componentWillUnmount(){
+    var el = findDOMNode(this);
+    d3Chart.destroy(el);
+  }
+
+  render(){
+    return (
+      <div className="chart"></div>
+    );
+  }
 }
 
- Chart.propTypes = propTypes;
- Chart.defaultProps = defaultProps;
+export default Chart
